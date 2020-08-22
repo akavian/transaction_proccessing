@@ -1,7 +1,20 @@
 package com.dotin.interview.transaction.processing.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Date;
+import java.util.Set;
 
-public class TransactionRepository implements JpaRepository<Transaction, Long> {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.dotin.interview.transaction.processing.model.Transaction;
+
+public interface TransactionRepository extends JpaRepository<Transaction, Long> {
+
+	@Query("SELETCT transaction FROM TRANSACTION transaction WHERE transaction.cardNumber=carNumber and "
+			+ "transaction.transactionDate >= startDate and transaction.transactionDate < endDate ")
+	Set<Transaction> findAllByCardAndDateNumber(String cardNumber, Date startDate, Date endDate);
+
+	@Query("SELECT transaction FORM TRANSACTION transaction WHERE transaction.cardNumber=cardNumber ORDER BY transaction.transactionDate DSC LIMIT 10")
+	Set<Transaction> getLastTenTransactions(String cardNumber);
 
 }

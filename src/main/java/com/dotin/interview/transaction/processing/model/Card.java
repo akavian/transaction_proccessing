@@ -3,6 +3,7 @@
  */
 package com.dotin.interview.transaction.processing.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -35,6 +36,9 @@ public class Card {
 
 	@Column(name = "CARDPASSWORD", nullable = false)
 	private String cardPassword;
+	
+	@Column(name = "MISTAKETIMES")
+	private short mistakeTimes;
 
 	@Column(name = "ISOPEN", nullable = false)
 	private boolean isOpen;
@@ -99,5 +103,20 @@ public class Card {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Set<Account> getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(Set<Account> accounts) {
+		this.accounts = accounts;
+	}
+	
+	public void addAccount( Account account) {
+		if (accounts == null) {
+			accounts = new HashSet<Account>();
+		}
+		accounts.add(account);
 	}
 }

@@ -33,19 +33,24 @@ public class Account {
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH })
-	@JoinColumn(name = "ID", nullable = false)
+	@JoinColumn(name = "CARDID", nullable = false)
 	private Card card;
 	
 	public Account() {
 		
 	}
 
-	public Account(String accountNumber, double amount, boolean primary) {
+	
+
+	public Account(String accountNumber, double amount, boolean primary, Card card) {
 		super();
 		this.accountNumber = accountNumber;
 		this.amount = amount;
 		this.primary = primary;
+		this.card = card;
 	}
+
+
 
 	public String getAccountNumber() {
 		return accountNumber;
@@ -73,6 +78,14 @@ public class Account {
 
 	public void setPrimary(boolean primary) {
 		this.primary = primary;
+	}
+
+	public Card getCard() {
+		return card;
+	}
+
+	public void setCard(Card card) {
+		this.card = card;
 	}
 	
 }

@@ -29,28 +29,35 @@ public class Transaction {
 	@Column(name = "FOLLOWUPNUMBER", nullable = false)
 	private String followUpNumber;
 
-	@Column(name = "CARD", nullable = false)
-	private Card card;
+	@Column(name = "CARDNUMBER", nullable = false)
+	private String cardNumber;
 
 	@Column(name = "AMOUNT", nullable = false)
 	private double amount;
 
 	@Column(name = "RESPONSECODE", nullable = false)
 	private String responeCode;
+	
+	@Column(name = "TRANSACTIONTYPE", nullable = false)
+	private String transactionType;
 
 	public Transaction() {
 	}
 
-	public Transaction(Date transactionDate, String terminalType, String followUpNumber, Card card, double amount,
-			String responeCode) {
+
+
+	public Transaction(Date transactionDate, String terminalType, String followUpNumber, String cardNumber,
+			double amount, String responeCode) {
 		super();
 		this.transactionDate = transactionDate;
 		this.terminalType = terminalType;
 		this.followUpNumber = followUpNumber;
-		this.card = card;
+		this.cardNumber = cardNumber;
 		this.amount = amount;
 		this.responeCode = responeCode;
 	}
+
+
 
 	public Date getTransactionDate() {
 		return transactionDate;
@@ -76,13 +83,6 @@ public class Transaction {
 		this.followUpNumber = followUpNumber;
 	}
 
-	public Card getCard() {
-		return card;
-	}
-
-	public void setCard(Card card) {
-		this.card = card;
-	}
 
 	public double getAmount() {
 		return amount;
@@ -102,6 +102,18 @@ public class Transaction {
 
 	public long getId() {
 		return id;
+	}
+
+
+
+	public String getCardNumber() {
+		return cardNumber;
+	}
+
+
+
+	public void setCardNumber(String cardNumber) {
+		this.cardNumber = cardNumber;
 	}
 
 }

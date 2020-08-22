@@ -13,13 +13,13 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "BANKUSER")
 public class User {
 	
 	@Id
 	@Column(name = "ID", nullable = false)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "USER_SEQ")
-	@SequenceGenerator(name = "USER_SEQ", sequenceName = "USER_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "BANKUSER_SEQ")
+	@SequenceGenerator(name = "BANKUSER_SEQ", sequenceName = "BANKUSER_SEQ", allocationSize = 1)
 	private long id;
 	
 	@Column(name = "FIRSTNAME", nullable = false )
@@ -35,7 +35,7 @@ public class User {
 	private String userStatus;
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn (name = "ID", referencedColumnName = "ID" )
+	@JoinColumn (name = "ID", referencedColumnName = "CARDID" )
 	private Card card;
 	
 	
