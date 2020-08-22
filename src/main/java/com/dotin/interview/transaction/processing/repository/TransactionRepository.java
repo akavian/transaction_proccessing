@@ -12,9 +12,9 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
 	@Query("SELETCT transaction FROM TRANSACTION transaction WHERE transaction.cardNumber=carNumber and "
 			+ "transaction.transactionDate >= startDate and transaction.transactionDate < endDate ")
-	Set<Transaction> findAllByCardAndDateNumber(String cardNumber, Date startDate, Date endDate);
+	Set<Transaction> findAllByCardAndDate(String cardNumber, Date startDate, Date endDate);
 
-	@Query("SELECT transaction FORM TRANSACTION transaction WHERE transaction.cardNumber=cardNumber ORDER BY transaction.transactionDate DSC LIMIT 10")
+	@Query("SELECT transaction FROM TRANSACTION transaction WHERE transaction.cardNumber=cardNumber ORDER BY transaction.transactionDate DSC LIMIT 10")
 	Set<Transaction> getLastTenTransactions(String cardNumber);
 
 }

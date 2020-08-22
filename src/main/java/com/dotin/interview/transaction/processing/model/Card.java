@@ -43,6 +43,9 @@ public class Card {
 	@Column(name = "ISOPEN", nullable = false)
 	private boolean isOpen;
 	
+	@Column(name = "MAINACCOUNT", nullable = false)
+	private String mainAccount;
+	
 	@OneToOne(mappedBy = "card")
 	private User user;
 	
@@ -118,5 +121,21 @@ public class Card {
 			accounts = new HashSet<Account>();
 		}
 		accounts.add(account);
+	}
+
+	public short getMistakeTimes() {
+		return mistakeTimes;
+	}
+
+	public void setMistakeTimes(short mistakeTimes) {
+		this.mistakeTimes = mistakeTimes;
+	}
+
+	public String getMainAccount() {
+		return mainAccount;
+	}
+
+	public void setMainAccount(String mainAccount) {
+		this.mainAccount = mainAccount;
 	}
 }

@@ -11,7 +11,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SpringFoxConfig {                           // wasted a lot of time to configure this, but it does not        
-    @Bean												 // detect my apis
+    @Bean												 // detect my APIs
     public Docket api() { 	
         return new Docket(DocumentationType.SWAGGER_2)  
           .select()                                  
