@@ -26,6 +26,8 @@ import com.dotin.interview.transaction.processing.response.CashFlowTranactionsRe
 import com.dotin.interview.transaction.processing.response.CurrentExistingAmount;
 import com.dotin.interview.transaction.processing.response.Response;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+/*Obviously there should be validation but I couldn't finish it in time. This project will be updated soon*/
 @RestController
 @RequestMapping("/mainTransactions")
 public class TransactionManager {
@@ -43,7 +45,7 @@ public class TransactionManager {
 
 	@PostMapping("/existingAmount")
 	@Transactional
-	public Response getDailyCashFlow(Request request) {
+	public Response getDailyCashFlow(@RequestBody Request request) {
 		Card storedCard = cardRepository.findByCardNumber(request.getCardNumber());
 		double amount = fee(request.getTerminalType());
 		
@@ -60,7 +62,7 @@ public class TransactionManager {
 
 	@PostMapping("/tenLastTransactions")
 	@Transactional
-	public Response getTenLastTransactions(Request request) {
+	public Response getTenLastTransactions(@RequestBody Request request) {
 		Card storedCard = cardRepository.findByCardNumber(request.getCardNumber());
 		Set<Transaction> transactions = null;
 		transactions = transactonRepository.getLastTenTransactions(storedCard.getCardNumber());
@@ -79,7 +81,7 @@ public class TransactionManager {
 
 	@PostMapping("/getDailyTransactions")
 	@Transactional
-	public Response getDailyTransactions(DailyCashFlowTransactionRequest request) {
+	public Response getDailyTransactions(@RequestBody DailyCashFlowTransactionRequest request) {
 		Card storedCard = cardRepository.findByCardNumber(request.getCardNumber());
 		Set<Transaction> transactions = transactonRepository.findAllByCardAndDate(storedCard.getCardNumber(),
 				request.getStartDate(), request.getEndDate());
@@ -95,7 +97,7 @@ public class TransactionManager {
 
 	@PostMapping("cartToCartTransaction")
 	@Transactional
-	public Response cartToCartTransaction(CartToCartTransactionRequest request) {
+	public Response cartToCartTransaction(@RequestBody CartToCartTransactionRequest request) {
 		Card sourceCard = cardRepository.findByCardNumber(request.getCardNumber());
 		Card destinationCard = cardRepository.findByCardNumber(request.getDestinationCardNumber());
 		Account sourceAccount = accountRepository.findByAccountNumber(sourceCard.getMainAccount());
