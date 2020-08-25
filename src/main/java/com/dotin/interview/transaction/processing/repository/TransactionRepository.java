@@ -10,11 +10,11 @@ import com.dotin.interview.transaction.processing.model.Transaction;
 
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
-	@Query("SELETCT transaction FROM TRANSACTION transaction WHERE transaction.cardNumber=carNumber and "
-			+ "transaction.transactionDate >= startDate and transaction.transactionDate < endDate ")
+	@Query(value = "SELECT transaction FROM TRANSACTION transaction WHERE transaction.cardNumber=cardNumber and "
+			+ "transaction.transactionDate >= startDate and transaction.transactionDate < endDate ", nativeQuery = true)
 	Set<Transaction> findAllByCardAndDate(String cardNumber, Date startDate, Date endDate);
 
-	@Query("SELECT transaction FROM TRANSACTION transaction WHERE transaction.cardNumber=cardNumber ORDER BY transaction.transactionDate DSC LIMIT 10")
+	@Query(value = "SELECT transaction FROM TRANSACTION transaction WHERE transaction.cardNumber=cardNumber ORDER BY transaction.transactionDate DESC LIMIT 10", nativeQuery = true)
 	Set<Transaction> getLastTenTransactions(String cardNumber);
 
 }
