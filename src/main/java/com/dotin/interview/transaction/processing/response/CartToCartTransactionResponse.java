@@ -1,6 +1,7 @@
 package com.dotin.interview.transaction.processing.response;
 
 import com.dotin.interview.transaction.processing.enums.ResponseStateEnum;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class CartToCartTransactionResponse extends Response{
 	private String destinationCardNumber;

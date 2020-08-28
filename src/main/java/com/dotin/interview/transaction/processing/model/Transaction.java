@@ -1,14 +1,10 @@
 package com.dotin.interview.transaction.processing.model;
 
+import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Pattern;
+import java.sql.Timestamp;
 import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "TRANSACTION")
@@ -16,38 +12,43 @@ public class Transaction {
 
 	@Id
 	@Column(name = "ID", nullable = false)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "TRANSACTION_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TRANSACTION_SEQ")
 	@SequenceGenerator(name = "TRANSACTION_SEQ", sequenceName = "TRANSACTION_SEQ", allocationSize = 1)
 	private long id;
 
-	@Column(name = "transactionDate", nullable = false)
+	@Column(name = "TRANSACTIONDATE", nullable = false)
 	private Date transactionDate;
 
+	@Pattern(regexp = "^[1-9]{2}", message = "Should contain only two digits")
 	@Column(name = "TERMINALTYPE", nullable = false)
 	private String terminalType;
 
-	@Column(name = "FOLLOWUPNUMBER", nullable = false)
+	@Pattern(regexp = "^[1-9a-zA-Z]{20}", message = "Should contains 20 digits or characters")
+	@Column(name = "FOLLOWUPNUMBER", nullable = false, unique = true)
 	private String followUpNumber;
 
+	@Pattern(regexp = "^[1-9]{16}")
 	@Column(name = "CARDNUMBER", nullable = false)
 	private String cardNumber;
 
+	@Digits(integer = 30, fraction = 0)
 	@Column(name = "AMOUNT", nullable = false)
-	private double amount;
+	private int amount;
 
+	@Pattern(regexp = "^[1-9]{2}" , message = "Has only two digits")
 	@Column(name = "RESPONSECODE", nullable = false)
 	private String responeCode;
-	
+
+	@Pattern(regexp = "^[1-9]{2}", message = "Has only two digits")
 	@Column(name = "TRANSACTIONTYPE", nullable = false)
 	private String transactionType;
+
 
 	public Transaction() {
 	}
 
-
-
 	public Transaction(Date transactionDate, String terminalType, String followUpNumber, String cardNumber,
-			double amount, String responeCode) {
+					   int amount, String responeCode) {
 		super();
 		this.transactionDate = transactionDate;
 		this.terminalType = terminalType;
@@ -57,10 +58,20 @@ public class Transaction {
 		this.responeCode = responeCode;
 	}
 
+	public String getTransactionType() {
+		return transactionType;
+	}
 
+	public void setTransactionType(String transactionType) {
+		this.transactionType = transactionType;
+	}
 
 	public Date getTransactionDate() {
 		return transactionDate;
+	}
+
+	public void setTransactionDate(Timestamp transactionDate) {
+		this.transactionDate = transactionDate;
 	}
 
 	public void setTransactionDate(Date transactionDate) {
@@ -83,12 +94,11 @@ public class Transaction {
 		this.followUpNumber = followUpNumber;
 	}
 
-
-	public double getAmount() {
+	public int getAmount() {
 		return amount;
 	}
 
-	public void setAmount(double amount) {
+	public void setAmount(int amount) {
 		this.amount = amount;
 	}
 
@@ -104,16 +114,17 @@ public class Transaction {
 		return id;
 	}
 
-
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public String getCardNumber() {
 		return cardNumber;
 	}
 
-
-
 	public void setCardNumber(String cardNumber) {
 		this.cardNumber = cardNumber;
 	}
+
 
 }

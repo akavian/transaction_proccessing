@@ -3,20 +3,10 @@
  */
 package com.dotin.interview.transaction.processing.model;
 
+import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "CARD")
@@ -24,42 +14,40 @@ public class Card {
 
 	@Id
 	@Column(name = "ID", nullable = false)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "CARD_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CARD_SEQ")
 	@SequenceGenerator(name = "CARD_SEQ", sequenceName = "CARD_SEQ", allocationSize = 1)
 	private long id;
 
-	@Column(name = "CARDNUMBER", nullable = false)
+	@Pattern(regexp = "^[1-9]{16}", message = "Should only contain numbers")
+	@Column(name = "CARDNUMBER", nullable = false, unique = true)
 	private String cardNumber;
-
-	@Column(name = "CARDOWNER", nullable = false)
-	private String cardOwner;
 
 	@Column(name = "CARDPASSWORD", nullable = false)
 	private String cardPassword;
-	
+
 	@Column(name = "MISTAKETIMES")
 	private short mistakeTimes;
 
 	@Column(name = "ISOPEN", nullable = false)
 	private boolean isOpen;
-	
+
+	@Pattern(regexp = "^[1-9]{10}", message = "Should only contain numbers")
 	@Column(name = "MAINACCOUNT", nullable = false)
 	private String mainAccount;
-	
+
 	@OneToOne(mappedBy = "card")
 	private User user;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "card", cascade = CascadeType.ALL)
 	private Set<Account> accounts;
-	
+
 
 	public Card() {
 	}
 
-	public Card(String cardNumber, String cardOwner, String cardPassword, boolean isOpen) {
+	public Card(String cardNumber, String cardPassword, boolean isOpen) {
 		super();
 		this.cardNumber = cardNumber;
-		this.cardOwner = cardOwner;
 		this.cardPassword = cardPassword;
 		this.isOpen = isOpen;
 	}
@@ -70,14 +58,6 @@ public class Card {
 
 	public void setCardNumber(String cardNumber) {
 		this.cardNumber = cardNumber;
-	}
-
-	public String getCardOwner() {
-		return cardOwner;
-	}
-
-	public void setCardOwner(String cardOwner) {
-		this.cardOwner = cardOwner;
 	}
 
 	public String getCardPassword() {
@@ -100,6 +80,10 @@ public class Card {
 		return id;
 	}
 
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public User getUser() {
 		return user;
 	}
@@ -115,7 +99,7 @@ public class Card {
 	public void setAccounts(Set<Account> accounts) {
 		this.accounts = accounts;
 	}
-	
+
 	public void addAccount( Account account) {
 		if (accounts == null) {
 			accounts = new HashSet<Account>();
@@ -138,4 +122,5 @@ public class Card {
 	public void setMainAccount(String mainAccount) {
 		this.mainAccount = mainAccount;
 	}
+
 }

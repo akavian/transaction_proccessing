@@ -1,19 +1,13 @@
 package com.dotin.interview.transaction.processing.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import java.util.Objects;
 
-@Entity 
-@Table(name = "Account")
+@Entity
+@Table(name = "ACCOUNT")
 public class Account {
 	
 	@Id
@@ -21,36 +15,33 @@ public class Account {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "ACCOUNT_SEQ")
 	@SequenceGenerator(name = "ACCOUNT_SEQ", sequenceName = "ACCOUNT_SEQ", allocationSize = 1)
 	private long id;
-	
-	@Column(name = "ACCOUNTNUMBER", nullable = false)
+
+	@Column(name = "ACCOUNTNUMBER", nullable = false, unique = true)
+	@Pattern(regexp = "^[1-9]{10}", message = "Should only contains number")
 	private String accountNumber;
-	
+
 	@Column(name = "AMOUNT", nullable = false)
-	private double amount;
-	
-	@Column(name = "PRIMARY", nullable = false)
-	private boolean primary;
-	
+	@NotBlank
+	@Digits(integer = 30, fraction = 0)
+	private int amount;
+
 	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH })
 	@JoinColumn(name = "CARDID", nullable = false)
 	private Card card;
-	
+
 	public Account() {
-		
+
 	}
 
-	
 
-	public Account(String accountNumber, double amount, boolean primary, Card card) {
+
+	public Account(String accountNumber, int amount, Card card) {
 		super();
 		this.accountNumber = accountNumber;
 		this.amount = amount;
-		this.primary = primary;
 		this.card = card;
 	}
-
-
 
 	public String getAccountNumber() {
 		return accountNumber;
@@ -60,11 +51,12 @@ public class Account {
 		this.accountNumber = accountNumber;
 	}
 
-	public double getAmount() {
+
+	public int getAmount() {
 		return amount;
 	}
 
-	public void setAmount(double amount) {
+	public void setAmount(int amount) {
 		this.amount = amount;
 	}
 
@@ -72,12 +64,8 @@ public class Account {
 		return id;
 	}
 
-	public boolean isPrimary() {
-		return primary;
-	}
-
-	public void setPrimary(boolean primary) {
-		this.primary = primary;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public Card getCard() {
@@ -87,5 +75,6 @@ public class Account {
 	public void setCard(Card card) {
 		this.card = card;
 	}
-	
+
+
 }

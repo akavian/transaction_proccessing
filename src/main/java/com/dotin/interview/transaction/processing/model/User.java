@@ -1,45 +1,39 @@
 package com.dotin.interview.transaction.processing.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "BANKUSER")
 public class User {
-	
+
 	@Id
 	@Column(name = "ID", nullable = false)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "BANKUSER_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BANKUSER_SEQ")
 	@SequenceGenerator(name = "BANKUSER_SEQ", sequenceName = "BANKUSER_SEQ", allocationSize = 1)
 	private long id;
-	
-	@Column(name = "FIRSTNAME", nullable = false )
+
+	@Pattern(regexp = "^[A-Z]{1}[a-z]{15}" , message = "Should start with a capital letter")
+	@Column(name = "FIRSTNAME", nullable = false)
 	private String firstName;
-	
+
+	@Pattern(regexp = "^[A-Z]{1}[a-z]{15}" , message = "Should start with a capital letter")
 	@Column(name = "LASTNAME", nullable = false)
 	private String lastName;
-	
-	@Column(name = "NATIONALCODE", nullable = false)
+
+	@Pattern(regexp = "^[1-9]{10}", message = "Should only contain numbers")
+	@Column(name = "NATIONALCODE", nullable = false, unique = true)
 	private String nationalCode;
-	
+
+	@Pattern(regexp = "^(ACTIVE|INACTIVE)", message = "Only ACTIVE or INACTIVE is accepted")
 	@Column(name = "USERSTATUS", nullable = false)
 	private String userStatus;
-	
+
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn (name = "ID", referencedColumnName = "CARDID" )
+	@JoinColumn(name = "ID", referencedColumnName = "CARDID")
 	private Card card;
-	
-	
-	
+
+
 	public User() {}
 	
 	public User(String firstName, String lastName, String nationalCode, String userStatus) {
@@ -93,7 +87,5 @@ public class User {
 	public void setCard(Card card) {
 		this.card = card;
 	}
-	
-
 	
 }

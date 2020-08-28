@@ -5,7 +5,6 @@ import java.util.Set;
 
 import javax.transaction.Transactional;
 
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,19 +32,20 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 public class TransactionManager {
 
 	private final CardRepository cardRepository;
-	private final TransactionRepository transactonRepository;
+	private final TransactionRepository transactionRepository;
 	private final AccountRepository accountRepository;
 
-	public TransactionManager(CardRepository cardRepository, TransactionRepository transactonRepository, AccountRepository accountRepository) {
+	public TransactionManager(CardRepository cardRepository, TransactionRepository transactionRepository, AccountRepository accountRepository) {
 		super();
 		this.cardRepository = cardRepository;
-		this.transactonRepository = transactonRepository;
+		this.transactionRepository = transactionRepository;
 		this.accountRepository = accountRepository;
 	}
 
 	@PostMapping("/existingAmount")
 	@Transactional
 	public Response getDailyCashFlow(@RequestBody Request request) {
+
 		Card storedCard = cardRepository.findByCardNumber(request.getCardNumber());
 		double amount = fee(request.getTerminalType());
 		
@@ -53,7 +53,7 @@ public class TransactionManager {
 				storedCard.getCardNumber(), amount, ResponseStateEnum.SUCCESSFUL.getCode());
 		Account account = accountRepository.findByAccountNumber(storedCard.getMainAccount());
 		account.setAmount(account.getAmount() - amount);
-		transactonRepository.save(transaction);
+		transactionRepository.save(transaction);
 		CurrentExistingAmount response = new CurrentExistingAmount(storedCard.getCardNumber(),
 				request.getFollowUpCode(), ResponseStateEnum.SUCCESSFUL, account.getAmount());
 		return response;
@@ -65,7 +65,7 @@ public class TransactionManager {
 	public Response getTenLastTransactions(@RequestBody Request request) {
 		Card storedCard = cardRepository.findByCardNumber(request.getCardNumber());
 		Set<Transaction> transactions = null;
-		transactions = transactonRepository.getLastTenTransactions(storedCard.getCardNumber());
+		transactions = transactionRepository.getLastTenTransactions(storedCard.getCardNumber());
 		CashFlowTranactionsResponse cashFlowTransactionResponse = new CashFlowTranactionsResponse(
 				storedCard.getCardNumber(), request.getFollowUpCode(), ResponseStateEnum.SUCCESSFUL, transactions);
 		double amount = fee(request.getTerminalType());
@@ -73,7 +73,7 @@ public class TransactionManager {
 				storedCard.getCardNumber(), amount, ResponseStateEnum.SUCCESSFUL.getCode());
 		Account account = accountRepository.findByAccountNumber(storedCard.getMainAccount());
 		account.setAmount(account.getAmount() - amount);
-		transactonRepository.save(transaction);
+		transactionRepository.save(transaction);
 		return cashFlowTransactionResponse;
 
 	}
@@ -83,14 +83,14 @@ public class TransactionManager {
 	@Transactional
 	public Response getDailyTransactions(@RequestBody DailyCashFlowTransactionRequest request) {
 		Card storedCard = cardRepository.findByCardNumber(request.getCardNumber());
-		Set<Transaction> transactions = transactonRepository.findAllByCardAndDate(storedCard.getCardNumber(),
+		Set<Transaction> transactions = transactionRepository.findAllByCardAndDate(storedCard.getCardNumber(),
 				request.getStartDate(), request.getEndDate());
 		double amount = fee(request.getTerminalType());
 		Transaction transaction = new Transaction(new Date(), request.getTerminalType(), request.getFollowUpCode(),
 				storedCard.getCardNumber(), amount, ResponseStateEnum.SUCCESSFUL.getCode());
 		Account account = accountRepository.findByAccountNumber(storedCard.getMainAccount());
 		account.setAmount(account.getAmount() - amount);
-		transactonRepository.save(transaction);
+		transactionRepository.save(transaction);
 		CashFlowTranactionsResponse response = new CashFlowTranactionsResponse(storedCard.getCardNumber(), request.getFollowUpCode(), ResponseStateEnum.SUCCESSFUL, transactions);
 		return response;
 	}
@@ -107,8 +107,8 @@ public class TransactionManager {
 		Transaction destinationTransaction = new Transaction(date, request.getTerminalType(), request.getFollowUpCode(), destinationCard.getCardNumber(), request.getAmount(), ResponseStateEnum.SUCCESSFUL.getCode());
 		sourceAccount.setAmount(sourceAccount.getAmount() - request.getAmount());
 		destinationAccount.setAmount(destinationAccount.getAmount() - request.getAmount());
-		transactonRepository.save(sourceTransaction);
-		transactonRepository.save(destinationTransaction);
+		transactionRepository.save(sourceTransaction);
+		transactionRepository.save(destinationTransaction);
 		CartToCartTransactionResponse response = new CartToCartTransactionResponse(sourceCard.getCardNumber(), request.getFollowUpCode(), ResponseStateEnum.SUCCESSFUL, destinationCard.getCardNumber());
 		return response;
 

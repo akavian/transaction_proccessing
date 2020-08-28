@@ -5,12 +5,13 @@ import java.util.Date;
 public class CartToCartTransactionRequest extends Request{
 	private int amount;
 	private String destinationCardNumber;
-	
-	public CartToCartTransactionRequest(String cardNumber, Date transactionDate, String followUpDate,
-			String terminalType, String password, int amount, String destinationCardNumber) {
+	private String accountNumber;
+
+	public CartToCartTransactionRequest(String cardNumber, Date transactionDate, String followUpDate, String terminalType, String password, int amount, String destinationCardNumber, String accountNumber) {
 		super(cardNumber, transactionDate, followUpDate, terminalType, password);
 		this.amount = amount;
 		this.destinationCardNumber = destinationCardNumber;
+		this.accountNumber = accountNumber;
 	}
 
 	public int getAmount() {
@@ -28,6 +29,12 @@ public class CartToCartTransactionRequest extends Request{
 	public void setDestinationCardNumber(String destinationCardNumber) {
 		this.destinationCardNumber = destinationCardNumber;
 	}
-	
-	
+
+	public String getAccountNumber() {
+		return accountNumber;
+	}
+
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
+	}
 }
