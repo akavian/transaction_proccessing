@@ -2,7 +2,7 @@ package com.dotin.interview.transaction.processing.request;
 
 import java.util.Date;
 
-public class CartToCartTransactionRequest extends Request{
+public class CartToCartTransactionRequest extends DefaultRequest {
 	private int amount;
 	private String destinationCardNumber;
 	private String accountNumber;

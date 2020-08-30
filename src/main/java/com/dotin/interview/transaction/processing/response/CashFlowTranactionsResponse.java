@@ -4,8 +4,11 @@ import java.util.Set;
 
 import com.dotin.interview.transaction.processing.enums.ResponseStateEnum;
 import com.dotin.interview.transaction.processing.model.Transaction;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-public class CashFlowTranactionsResponse extends Response {
+
+public class CashFlowTranactionsResponse extends DefaultResponse {
 	
 	private Set<Transaction> transactions;
 

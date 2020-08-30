@@ -1,7 +1,6 @@
 package com.dotin.interview.transaction.processing.controller;
 
-import com.dotin.interview.transaction.processing.request.Request;
-import com.dotin.interview.transaction.processing.response.Response;
+import com.dotin.interview.transaction.processing.response.DefaultResponse;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -9,7 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class RestExceptionHandler {
 
     @ExceptionHandler
-    public Response exeptionD(Exception exception){
+    public DefaultResponse exeptionD(Exception exception){
         return null;
     }
 

@@ -1,9 +1,11 @@
 package com.dotin.interview.transaction.processing.response;
 
 import com.dotin.interview.transaction.processing.enums.ResponseStateEnum;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-public class CartToCartTransactionResponse extends Response{
+
+public class CartToCartTransactionResponse extends DefaultResponse {
 	private String destinationCardNumber;
 
 	public CartToCartTransactionResponse(String cardNumber, String followUpCode, ResponseStateEnum responseStateEnum,

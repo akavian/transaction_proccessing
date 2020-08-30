@@ -2,14 +2,14 @@ package com.dotin.interview.transaction.processing.request;
 
 import java.util.Date;
 
-public class Request {
+public class DefaultRequest {
 	private String cardNumber;
 	private Date transactionDate;
 	private String followUpCode;
 	private String terminalType;
 	private String password;
 	
-	public Request(String cardNumber, Date transactionDate, String followUpDate, String terminalType, String password) {
+	public DefaultRequest(String cardNumber, Date transactionDate, String followUpDate, String terminalType, String password) {
 		super();
 		this.cardNumber = cardNumber;
 		this.transactionDate = transactionDate;

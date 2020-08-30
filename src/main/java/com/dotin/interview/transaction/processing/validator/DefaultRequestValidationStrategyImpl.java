@@ -3,22 +3,27 @@ package com.dotin.interview.transaction.processing.validator;
 import com.dotin.interview.transaction.processing.exception.*;
 import com.dotin.interview.transaction.processing.repository.CardRepository;
 import com.dotin.interview.transaction.processing.repository.TransactionRepository;
-import com.dotin.interview.transaction.processing.request.Request;
+import com.dotin.interview.transaction.processing.request.DefaultRequest;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Component;
 
 import java.util.Calendar;
 import java.util.Date;
 
-public class RequestValidatorImpl<T extends Request> implements RequestValidator<T> {
+@Component
+@Qualifier
+public class DefaultRequestValidationStrategyImpl implements RequestValidationStrategy {
     CardRepository cardRepository;
     TransactionRepository transactionRepository;
 
-    public RequestValidatorImpl(CardRepository cardRepository, TransactionRepository transactionRepository) {
+    public DefaultRequestValidationStrategyImpl(CardRepository cardRepository, TransactionRepository transactionRepository) {
         this.cardRepository = cardRepository;
         this.transactionRepository = transactionRepository;
     }
 
     @Override
-    public void validateTransaction(T request){
+    public void validateTransaction(DefaultRequest request){
         validatePassword(request);
         validateRequiredFields(request);
         validateCardExporter(request);
@@ -26,24 +31,24 @@ public class RequestValidatorImpl<T extends Request> implements RequestValidator
         validateWorkingDay(request);
     }
 
-    @Override
-    public void validateCardExporter(T request) {
-        if (!request.getCardNumber().matches("[1-9]{16}") || cardRepository.findByCardNumber(request.getCardNumber()) == null) {
+
+    protected void validateCardExporter(DefaultRequest request) {
+        if (!request.getCardNumber().matches("^[1-9]{16}") || cardRepository.findByCardNumber(request.getCardNumber()) == null) {
             throw new InvalidCardExporter();
         }
     }
 
-    @Override
-    public void validatePassword(T request) {
-        if (request.getPassword().matches("[1-9]{4}") ||
+
+    protected void validatePassword(DefaultRequest request) {
+        if (request.getPassword().matches("^[1-9]{4}") ||
                 !cardRepository.findByCardNumber(request.getCardNumber())
                 .getCardPassword().equals(request.getPassword())) {
             throw new InvalidPasswordException();
         }
     }
 
-    @Override
-    public void validateWorkingDay(T request) {
+
+    protected void validateWorkingDay(DefaultRequest request) {
         Calendar today = Calendar.getInstance();
         Calendar requestDay = Calendar.getInstance();
         Date todayDate = new Date();
@@ -57,8 +62,8 @@ public class RequestValidatorImpl<T extends Request> implements RequestValidator
 
     }
 
-    @Override
-    public void validateUniqueTransaction(T request) {
+
+    protected void validateUniqueTransaction(DefaultRequest request) {
         if(transactionRepository.findDuplicateTransaction(request.getFollowUpCode(),
                 request.getCardNumber(),
                 request.getTransactionDate(),
@@ -68,8 +73,8 @@ public class RequestValidatorImpl<T extends Request> implements RequestValidator
 
     }
 
-    @Override
-    public void validateRequiredFields(T request) {
+
+    protected void validateRequiredFields(DefaultRequest request) {
         if(request.getPassword().isEmpty() || request.getFollowUpCode().isEmpty() || request.getTerminalType().isEmpty() ||
                 request.getCardNumber().isEmpty() || request.getTransactionDate() == null){
             throw new InvalidTransactionException();

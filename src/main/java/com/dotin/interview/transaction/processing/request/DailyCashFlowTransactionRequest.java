@@ -2,7 +2,7 @@ package com.dotin.interview.transaction.processing.request;
 
 import java.util.Date;
 
-public class DailyCashFlowTransactionRequest extends Request {
+public class DailyCashFlowTransactionRequest extends DefaultRequest {
 	private Date startDate;
 	private Date endDate;
 	public DailyCashFlowTransactionRequest(String cardNumber, Date transactionDate, String followUpDate,
