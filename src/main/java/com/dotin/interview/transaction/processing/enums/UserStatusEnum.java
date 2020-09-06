@@ -4,7 +4,7 @@ public enum UserStatusEnum {
     ACTIVE("ACTIVE"),
     INACTIVE("INACTIVE");
 
-    private String userStatus;
+    private final String userStatus;
 
     UserStatusEnum(String userStatus) {
         this.userStatus = userStatus;

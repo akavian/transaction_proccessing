@@ -1,6 +1,10 @@
 package com.dotin.interview.transaction.processing.request;
 
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.WebRequest;
+
 import java.util.Date;
+
 
 public class DefaultRequest {
 	private String cardNumber;
@@ -57,7 +61,4 @@ public class DefaultRequest {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
-	
 }

@@ -6,7 +6,7 @@ public enum TerminalTypeEnum {
 	
 	private final String terminalTypeCode;
 
-	private TerminalTypeEnum(String terminalTypeCode) {
+	TerminalTypeEnum(String terminalTypeCode) {
 		this.terminalTypeCode = terminalTypeCode;
 	}
 

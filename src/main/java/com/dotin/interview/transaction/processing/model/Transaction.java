@@ -2,6 +2,7 @@ package com.dotin.interview.transaction.processing.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -33,6 +34,7 @@ public class Transaction {
 
 	@Digits(integer = 30, fraction = 0)
 	@Column(name = "AMOUNT", nullable = false)
+	@Min(value = 0 , message = "The amount cannot be negative")
 	private int amount;
 
 	@Pattern(regexp = "^[1-9]{2}" , message = "Has only two digits")

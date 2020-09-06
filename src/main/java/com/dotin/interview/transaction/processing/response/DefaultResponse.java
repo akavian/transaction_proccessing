@@ -8,30 +8,24 @@ import org.springframework.stereotype.Component;
 public class DefaultResponse {
 	private String cardNumber;
 	private String followUpCode;
-	private ResponseStateEnum responseStateEnum;
-	public DefaultResponse(String cardNumber, String followUpCode, ResponseStateEnum responseStateEnum) {
-		super();
+	private String responseState;
+
+	public DefaultResponse(String cardNumber, String followUpCode, String responseState) {
 		this.cardNumber = cardNumber;
 		this.followUpCode = followUpCode;
-		this.responseStateEnum = responseStateEnum;
+		this.responseState = responseState;
+
 	}
-	public String getCardNumber() {
-		return cardNumber;
-	}
+
 	public void setCardNumber(String cardNumber) {
 		this.cardNumber = cardNumber;
 	}
-	public String getFollowUpCode() {
-		return followUpCode;
-	}
+
 	public void setFollowUpCode(String followUpCode) {
 		this.followUpCode = followUpCode;
 	}
-	public ResponseStateEnum getResponseStateEnum() {
-		return responseStateEnum;
+
+	public void setResponseState(String responseState) {
+		this.responseState = responseState;
 	}
-	public void setResponseStateEnum(ResponseStateEnum responseStateEnum) {
-		this.responseStateEnum = responseStateEnum;
-	}
-	
 }

@@ -8,18 +8,12 @@ import org.springframework.stereotype.Component;
 public class CurrentExistingAmount extends DefaultResponse {
 	private double amount;
 
-	public CurrentExistingAmount(String cardNumber, String followUpCode, ResponseStateEnum responseStateEnum,
-			double amount) {
-		super(cardNumber, followUpCode, responseStateEnum);
+	public CurrentExistingAmount(String cardNumber, String followUpCode, String responseState, double amount) {
+		super(cardNumber, followUpCode, responseState);
 		this.amount = amount;
-	}
-
-	public double getAmount() {
-		return amount;
 	}
 
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
-	 
 }

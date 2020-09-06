@@ -15,26 +15,26 @@ import javax.annotation.security.PermitAll;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
-	@Query(value = "SELECT transaction FROM TRANSACTION transaction " +
+	@Query(value = "SELECT transaction FROM Transaction transaction " +
 			"WHERE transaction.cardNumber = :cardNumber AND " +
 			"transaction.transactionDate >= :startDate " +
-			"and transaction.transactionDate < :endDate ", nativeQuery = true)
+			"and transaction.transactionDate < :endDate ")
 	Set<Transaction> findAllByCardAndDate(@Param("cardNumber") String cardNumber,
 										  @Param("startDate") Date startDate,
 										  @Param("endDate") Date endDate);
 
-	@Query(value = "SELECT transaction FROM TRANSACTION transaction " +
+	@Query(value = "SELECT transaction FROM Transaction transaction " +
 			"WHERE transaction.cardNumber = :cardNumber " +
 			"ORDER BY transaction.transactionDate DESC " +
 			"LIMIT 10", nativeQuery = true)
 	Set<Transaction> getLastTenTransactions(@Param("cardNumber") String cardNumber);
 
-	@Query(value = "SELECT transaction FROM TRANSACTION transaction " +
+	@Query(value = "SELECT COUNT(transaction) FROM Transaction transaction " +
 			"WHERE transaction.transactionDate = :transactionDate " +
 			"AND transaction.followUpNumber = :followUpNumber " +
 			"AND transaction.cardNumber = :cardNumber " +
 			"AND transaction.terminalType = :terminalType" , nativeQuery = true)
-	Transaction findDuplicateTransaction(@Param("followUpNumber") String followUpNumber,
+	int findDuplicateTransaction(@Param("followUpNumber") String followUpNumber,
 									 @Param("cardNumber") String cardNumber,
 									 @Param("transactionDate") Date transactionDate,
 									 @Param("terminalType") String terminalType);

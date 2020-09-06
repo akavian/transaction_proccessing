@@ -12,18 +12,12 @@ public class CashFlowTranactionsResponse extends DefaultResponse {
 	
 	private Set<Transaction> transactions;
 
-	public CashFlowTranactionsResponse(String cardNumber, String followUpCode, ResponseStateEnum responseStateEnum,
-			Set<Transaction> transaction) {
-		super(cardNumber, followUpCode, responseStateEnum);
-		this.transactions = transaction;
-	}
-
-	public Set<Transaction> getTransactions() {
-		return transactions;
+	public CashFlowTranactionsResponse(String cardNumber, String followUpCode, String responseState, Set<Transaction> transactions) {
+		super(cardNumber, followUpCode, responseState);
+		this.transactions = transactions;
 	}
 
 	public void setTransactions(Set<Transaction> transactions) {
 		this.transactions = transactions;
 	}
-	
 }

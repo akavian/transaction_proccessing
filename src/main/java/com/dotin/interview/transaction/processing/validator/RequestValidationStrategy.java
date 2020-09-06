@@ -6,5 +6,4 @@ import org.springframework.boot.autoconfigure.cassandra.CassandraProperties;
 public interface RequestValidationStrategy {
 
     void validateTransaction(DefaultRequest request);
-
 }

@@ -3,22 +3,22 @@ package com.dotin.interview.transaction.processing.request;
 import java.util.Date;
 
 public class CartToCartTransactionRequest extends DefaultRequest {
-	private int amount;
+	private Long amount;
 	private String destinationCardNumber;
 	private String accountNumber;
 
-	public CartToCartTransactionRequest(String cardNumber, Date transactionDate, String followUpDate, String terminalType, String password, int amount, String destinationCardNumber, String accountNumber) {
+	public CartToCartTransactionRequest(String cardNumber, Date transactionDate, String followUpDate, String terminalType, String password, Long amount, String destinationCardNumber, String accountNumber) {
 		super(cardNumber, transactionDate, followUpDate, terminalType, password);
 		this.amount = amount;
 		this.destinationCardNumber = destinationCardNumber;
 		this.accountNumber = accountNumber;
 	}
 
-	public int getAmount() {
+	public Long getAmount() {
 		return amount;
 	}
 
-	public void setAmount(int amount) {
+	public void setAmount(Long amount) {
 		this.amount = amount;
 	}
 

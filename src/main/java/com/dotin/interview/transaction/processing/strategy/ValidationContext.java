@@ -3,7 +3,6 @@ package com.dotin.interview.transaction.processing.strategy;
 import com.dotin.interview.transaction.processing.request.DefaultRequest;
 import com.dotin.interview.transaction.processing.validator.RequestValidationStrategy;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 public class ValidationContext {
