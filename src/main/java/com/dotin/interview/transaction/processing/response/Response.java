@@ -9,7 +9,6 @@ import java.util.List;
 
 @Component
 @Scope("prototype")
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Response {
     private String cardNumber;
     private String followUpCode;

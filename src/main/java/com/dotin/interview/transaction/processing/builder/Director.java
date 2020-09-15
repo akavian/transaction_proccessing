@@ -1,10 +1,7 @@
 package com.dotin.interview.transaction.processing.builder;
 
 import com.dotin.interview.transaction.processing.model.Transaction;
-import com.dotin.interview.transaction.processing.request.CartToCartTransactionRequest;
-import com.dotin.interview.transaction.processing.request.DailyCashFlowTransactionRequest;
-import com.dotin.interview.transaction.processing.request.DefaultRequest;
-import org.springframework.stereotype.Component;
+import com.dotin.interview.transaction.processing.request.Request;
 
 import java.util.List;
 
@@ -22,14 +19,14 @@ public class Director {
     }
 
 
-    public void makeHoldingResponse(DefaultRequest request, String responseCode, long holding) {
+    public void makeHoldingResponse(Request request, String responseCode, long holding) {
         builder.setCardNumber(request.getCardNumber());
         builder.setFollowUpCode(request.getFollowUpCode());
         builder.setResponseCode(responseCode);
         builder.setHolding(holding);
     }
 
-    public void makeTenLastTransactionResponse(DefaultRequest request, String responseCode, List<Transaction> transactions) {
+    public void makeTenLastTransactionResponse(Request request, String responseCode, List<Transaction> transactions) {
         builder.setCardNumber(request.getCardNumber());
         builder.setFollowUpCode(request.getFollowUpCode());
         builder.setResponseCode(responseCode);

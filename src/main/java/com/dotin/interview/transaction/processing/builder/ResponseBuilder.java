@@ -12,7 +12,6 @@ import java.util.List;
 @Component
 public class ResponseBuilder implements Builder {
     Response response;
-    WebApplicationContext applicationContext;
     public ResponseBuilder() {
         reset();
     }
@@ -49,7 +48,7 @@ public class ResponseBuilder implements Builder {
 
     @Override
     public void reset() {
-        this.response = applicationContext.getBean();
+        this.response = new Response();
     }
 
     @Override

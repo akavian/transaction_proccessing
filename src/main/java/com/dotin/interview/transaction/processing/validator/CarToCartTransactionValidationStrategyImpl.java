@@ -1,20 +1,18 @@
 package com.dotin.interview.transaction.processing.validator;
 
-import com.dotin.interview.transaction.processing.request.CartToCartTransactionRequest;
-import com.dotin.interview.transaction.processing.request.DefaultRequest;
+import com.dotin.interview.transaction.processing.request.Request;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CarToCartTransactionValidationStrategyImpl extends DefaultRequestValidationStrategyImpl {
+
     public CarToCartTransactionValidationStrategyImpl(GeneralValidator generalValidator) {
         super(generalValidator);
     }
 
-    public void validateTransaction(DefaultRequest request) {
+    public void validateTransaction(Request request) {
         super.validateTransaction(request);
-        if (request instanceof CartToCartTransactionRequest) {
-            CartToCartTransactionRequest cartToCartTransactionRequest = (CartToCartTransactionRequest) request;
-            generalValidator.validateHolding(cartToCartTransactionRequest.getCardNumber(), cartToCartTransactionRequest.getAmount());
-        }
+        generalValidator.validateHolding(request.getCardNumber(), request.getAmount());
+
     }
 }

@@ -1,8 +1,7 @@
 package com.dotin.interview.transaction.processing.validator;
 
 import com.dotin.interview.transaction.processing.exception.ProcessingTransactionProblem;
-import com.dotin.interview.transaction.processing.request.DailyCashFlowTransactionRequest;
-import com.dotin.interview.transaction.processing.request.DefaultRequest;
+import com.dotin.interview.transaction.processing.request.Request;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,16 +13,13 @@ public class DailyCashFlowTransactionValidationStrategyImpl extends DefaultReque
     }
 
     @Override
-    public void validateTransaction(DefaultRequest request) {
+    public void validateTransaction(Request request) {
         super.validateTransaction(request);
-        if (request instanceof DailyCashFlowTransactionRequest) {
-            DailyCashFlowTransactionRequest dailyCashFlowTransactionRequest = (DailyCashFlowTransactionRequest) request;
-            validateDailyCashflowRequiredFields(dailyCashFlowTransactionRequest);
-        }
+        validateDailyCashFlowRequiredFields(request);
     }
 
-    private void validateDailyCashflowRequiredFields(DailyCashFlowTransactionRequest request) {
-        if (request.getStartDate() == null || request.getEndDate() == null || request.getStartDate().after(request.getEndDate()))
+    private void validateDailyCashFlowRequiredFields(Request request) {
+        if (request.getStartDateOfTransaction() == null || request.getEndDateOfTransaction() == null || request.getStartDateOfTransaction().after(request.getEndDateOfTransaction()))
             throw new ProcessingTransactionProblem();
     }
 

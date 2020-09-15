@@ -35,7 +35,7 @@ public class Transaction {
 	@Digits(integer = 30, fraction = 0)
 	@Column(name = "AMOUNT", nullable = false)
 	@Min(value = 0 , message = "The amount cannot be negative")
-	private int amount;
+	private Long amount;
 
 	@Pattern(regexp = "^[1-9]{2}" , message = "Has only two digits")
 	@Column(name = "RESPONSECODE", nullable = false)
@@ -50,7 +50,7 @@ public class Transaction {
 	}
 
 	public Transaction(Date transactionDate, String terminalType, String followUpNumber, String cardNumber,
-					   int amount, String responeCode) {
+					   Long amount, String responeCode) {
 		super();
 		this.transactionDate = transactionDate;
 		this.terminalType = terminalType;
@@ -96,11 +96,11 @@ public class Transaction {
 		this.followUpNumber = followUpNumber;
 	}
 
-	public int getAmount() {
+	public Long getAmount() {
 		return amount;
 	}
 
-	public void setAmount(int amount) {
+	public void setAmount(Long amount) {
 		this.amount = amount;
 	}
 

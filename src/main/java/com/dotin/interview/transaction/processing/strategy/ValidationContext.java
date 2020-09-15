@@ -1,9 +1,7 @@
 package com.dotin.interview.transaction.processing.strategy;
 
-import com.dotin.interview.transaction.processing.request.DefaultRequest;
+import com.dotin.interview.transaction.processing.request.Request;
 import com.dotin.interview.transaction.processing.validator.RequestValidationStrategy;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 
 public class ValidationContext {
    private RequestValidationStrategy strategy;
@@ -16,7 +14,7 @@ public class ValidationContext {
         this.strategy = strategy;
     }
 
-    public void validate(DefaultRequest request) {
+    public void validate(Request request) {
          strategy.validateTransaction(request);
     }
 }

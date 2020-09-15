@@ -7,13 +7,8 @@ import com.dotin.interview.transaction.processing.model.Transaction;
 import com.dotin.interview.transaction.processing.repository.AccountRepository;
 import com.dotin.interview.transaction.processing.repository.CardRepository;
 import com.dotin.interview.transaction.processing.repository.TransactionRepository;
-import com.dotin.interview.transaction.processing.request.CartToCartTransactionRequest;
-import com.dotin.interview.transaction.processing.request.DailyCashFlowTransactionRequest;
-import com.dotin.interview.transaction.processing.request.DefaultRequest;
-import com.dotin.interview.transaction.processing.response.CartToCartTransactionResponse;
-import com.dotin.interview.transaction.processing.response.CashFlowTranactionsResponse;
-import com.dotin.interview.transaction.processing.response.CurrentExistingAmount;
-import com.dotin.interview.transaction.processing.response.DefaultResponse;
+import com.dotin.interview.transaction.processing.request.Request;
+import com.dotin.interview.transaction.processing.response.Response;
 import com.dotin.interview.transaction.processing.strategy.ValidationContext;
 import com.dotin.interview.transaction.processing.validator.CarToCartTransactionValidationStrategyImpl;
 import com.dotin.interview.transaction.processing.validator.DailyCashFlowTransactionValidationStrategyImpl;
@@ -42,7 +37,7 @@ public class TransactionManager {
 
 	@PostMapping("/existingAmount")
 	@Transactional
-	public DefaultResponse getExistingAmount(@RequestBody DefaultRequest request) {
+	public Response getExistingAmount(@RequestBody Request request) {
 
 		ValidationContext validationContext = new ValidationContext(context.getBean(DefaultRequestValidationStrategyImpl.class));
 		validationContext.validate(request);
@@ -61,7 +56,7 @@ public class TransactionManager {
 
 	@PostMapping("/tenLastTransactions")
 	@Transactional
-	public DefaultResponse getTenLastTransactions(@RequestBody DefaultRequest request) {
+	public Response getTenLastTransactions(@RequestBody Request request) {
 
 		ValidationContext validationContext = new ValidationContext(context.getBean(DefaultRequestValidationStrategyImpl.class));
 		validationContext.validate(request);
@@ -80,7 +75,7 @@ public class TransactionManager {
 
 	@PostMapping("/getDailyTransactions")
 	@Transactional
-	public DefaultResponse getDailyTransactions(@RequestBody DailyCashFlowTransactionRequest request) {
+	public Response getDailyTransactions(@RequestBody Request request) {
 		ValidationContext validationContext = new ValidationContext(context.getBean(DailyCashFlowTransactionValidationStrategyImpl.class));
 		validationContext.validate(request);
 		Card storedCard = context.getBean(CardRepository.class).findByCardNumber(request.getCardNumber());
@@ -97,7 +92,7 @@ public class TransactionManager {
 
 	@PostMapping("cartToCartTransaction")
 	@Transactional
-	public DefaultResponse cartToCartTransaction(@RequestBody CartToCartTransactionRequest request) {
+	public Response cartToCartTransaction(@RequestBody Request request) {
 		ValidationContext validationContext = new ValidationContext(context.getBean(CarToCartTransactionValidationStrategyImpl.class));
 		validationContext.validate(request);
 		CardRepository cardRepository = context.getBean(CardRepository.class);
